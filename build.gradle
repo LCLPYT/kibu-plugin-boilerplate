@@ -1,13 +1,17 @@
 plugins {
     id 'java'
     id 'fabric-loom' version '1.1.8'
+    id 'maven-publish'
+    id 'gradle-build-utils' version '1.1.0'
 }
+
+Properties props = loadProperties.call('publish.properties') as Properties
 
 sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
 
 group = project.maven_group
-version = '1.0-SNAPSHOT'
+version = gitVersion.call()
 archivesBaseName = project.archives_base_name
 
 repositories {
@@ -58,5 +62,42 @@ java {
 jar {
     from("LICENSE") {
         rename { "${it}_${project.archivesBaseName}" }
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = project.archives_base_name
+
+            from components.java
+
+            pom {
+                name = 'Example Plugin'
+                description = 'This is an example description! Tell everyone what your plugin is about!'
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            def env = System.getenv()
+            if (Arrays.stream("DEPLOY_URL", "DEPLOY_USER", "DEPLOY_PASSWORD").allMatch(env.&containsKey)) {
+                credentials {
+                    username env.get("DEPLOY_USER")
+                    password env.get("DEPLOY_PASSWORD")
+                }
+                url env.get("DEPLOY_URL")
+            }
+            else if (Arrays.stream("mavenHost", "mavenUser", "mavenPassword").allMatch(props.&containsKey)) {
+                credentials {
+                    username props.getProperty('mavenUser')
+                    password props.getProperty('mavenPassword')
+                }
+                url props.getProperty('mavenHost')
+            } else {
+                url "file:///${project.projectDir}/repo"
+            }
+        }
     }
 }
