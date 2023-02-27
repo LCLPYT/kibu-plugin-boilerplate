@@ -12,7 +12,7 @@ import work.lclpnet.mplugins.ext.WorldStateListener;
 
 public class ExamplePlugin extends FabricPlugin implements WorldStateListener {
 
-    public static final String ID = "testPlugin";
+    public static final String ID = "examplePlugin";
     private static final Logger logger = LoggerFactory.getLogger(ID);
 
     // if you add a constructor, make sure to make give it no arguments so that the plugin can be loaded
