@@ -3,6 +3,7 @@ plugins {
     id 'fabric-loom' version '1.1.8'
     id 'maven-publish'
     id 'gradle-build-utils' version '1.1.0'
+    id 'kibu-plugin-dev' version '0.1.0'
 }
 
 Properties props = loadProperties.call('publish.properties') as Properties
@@ -36,6 +37,15 @@ dependencies {
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+loom {
+    // if you want to develop a plugin for dedicated servers, uncomment the following block
+    /*serverOnlyMinecraftJar()
+
+    runs {
+        remove client
+    }*/
 }
 
 test {
