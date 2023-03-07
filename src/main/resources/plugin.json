@@ -6,6 +6,6 @@
   "dependsOn": [],
   "fabric": {
     "env": ["client", "server"],
-    "requires": ["fabric-api"]
+    "requires": ["fabric-api", "kibu"]
   }
 }

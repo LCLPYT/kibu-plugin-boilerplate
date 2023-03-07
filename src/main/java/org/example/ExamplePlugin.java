@@ -31,7 +31,7 @@ public class ExamplePlugin extends FabricPlugin implements WorldStateListener {
         // when using hooks, they must be unregistered when the plugin unloads.
         // plugins can use the registerHook and registerHooks methods for comfort.
         // these methods take care of unregistering the hooks at plugin unload
-        registerHooks(new ExampleListener());
+        registerHooks(new ExampleListener(logger));
 
         // if you have other resources that need to be unloaded when the plugin unloads, let them implement
         // work.lclpnet.mplugins.ext.Unloadable so that you can register it via registerUnloadable()
