@@ -1,14 +1,11 @@
 package org.example.event;
 
-import net.fabricmc.fabric.api.networking.v1.PacketSender;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.network.ServerPlayNetworkHandler;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
 import org.slf4j.Logger;
-import work.lclpnet.kibu.hook.ServerPlayConnectionHooks;
-import work.lclpnet.mplugins.hook.HookListenerModule;
-import work.lclpnet.mplugins.hook.HookRegistrar;
-import work.lclpnet.mplugins.hook.builtin.PluginLifecycleHooks;
-import work.lclpnet.plugin.load.LoadedPlugin;
+import work.lclpnet.kibu.hook.player.PlayerHooks;
+import work.lclpnet.kibu.plugin.hook.HookListenerModule;
+import work.lclpnet.kibu.plugin.hook.HookRegistrar;
 
 public class ExampleListener implements HookListenerModule {
 
@@ -20,18 +17,12 @@ public class ExampleListener implements HookListenerModule {
 
     @Override
     public void registerListeners(HookRegistrar registrar) {
-        // register hook listeners here
-        registrar.registerHook(PluginLifecycleHooks.LOADED, this::onPluginLoaded);
-
-        // instead of fabric-api events, use kibu-fabric-hooks equivalents:
-        registrar.registerHook(ServerPlayConnectionHooks.JOIN, this::onJoin);
+        // register hooks here
+        registrar.registerHook(PlayerHooks.JOIN, this::onJoin);
     }
 
-    private void onJoin(ServerPlayNetworkHandler serverPlayNetworkHandler, PacketSender packetSender, MinecraftServer minecraftServer) {
-        logger.info("Player joined: {}", serverPlayNetworkHandler.player.getName().getString());
-    }
-
-    private void onPluginLoaded(LoadedPlugin plugin) {
-        // called when a plugin was loaded
+    private Text onJoin(ServerPlayerEntity player, Text joinMessage) {
+        logger.info("Player joined: {}", player.getName().getString());
+        return joinMessage;
     }
 }
