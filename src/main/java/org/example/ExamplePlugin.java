@@ -7,7 +7,7 @@ import org.example.cmd.CustomCommand;
 import org.example.event.ExampleListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import work.lclpnet.kibu.plugin.KibuPlugin;
+import work.lclpnet.kibu.plugin.ext.KibuPlugin;
 import work.lclpnet.kibu.scheduler.Ticks;
 import work.lclpnet.mplugins.MPlugins;
 import work.lclpnet.mplugins.ext.WorldStateListener;
