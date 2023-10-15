@@ -32,7 +32,7 @@ public class ExamplePlugin extends KibuPlugin implements WorldStateListener {
         registerHooks(new ExampleListener(logger));
 
         // register commands like this
-        registerCommand(CustomCommand.create());
+        new CustomCommand().register(this);
 
         // access to scheduler for delayed or recurring tasks
         getScheduler().timeout(() -> logger.info("This message is logged 10 seconds delayed."), Ticks.seconds(10));

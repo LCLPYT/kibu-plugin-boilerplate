@@ -9,14 +9,21 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
+import work.lclpnet.kibu.plugin.cmd.CommandRegistrar;
+import work.lclpnet.kibu.plugin.cmd.KibuCommand;
 import work.lclpnet.kibu.scheduler.Ticks;
 
 import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
 
-public class CustomCommand {
+public class CustomCommand implements KibuCommand {
 
-    public static LiteralArgumentBuilder<ServerCommandSource> create() {
+    @Override
+    public void register(CommandRegistrar registrar) {
+        registrar.registerCommand(command());
+    }
+
+    private static LiteralArgumentBuilder<ServerCommandSource> command() {
         return literal("custom")
                 .requires(source -> source.hasPermissionLevel(2))  // is op level 2
                 .then(argument("entity", EntityArgumentType.entity())
