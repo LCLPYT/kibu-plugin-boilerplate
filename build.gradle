@@ -3,7 +3,10 @@ plugins {
     id 'fabric-loom' version '1.5-SNAPSHOT'
     id 'maven-publish'
     id 'gradle-build-utils' version '1.7.0'
-    id 'kibu-plugin-dev' version '0.11.0'
+    id 'kibu-plugin-dev' version '0.13.0'
+
+    // if you want to include dependencies in the plugin's jar, you can use the shadow plugin
+    // id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 Properties props = buildUtils.loadProperties('publish.properties')
@@ -87,6 +90,8 @@ publishing {
             artifactId = project.base.archivesName.get()
 
             from components.java
+            // if you are using the shadow plugin, you can use the kibu software component
+            // from components.kibu
 
             pom {
                 name = 'Example Plugin'
